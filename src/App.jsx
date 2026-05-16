@@ -2,7 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Clock, Calendar, CheckCircle2, Timer, Trash2, Plus, ChevronLeft, ChevronRight, Settings, Wallet, X, Coffee, Check, Pencil, Filter } from 'lucide-react';
 import { calculateMonthlyTarget, formatTime } from './utils/dateHelpers';
 import { format, addMonths, subMonths, isSameMonth } from 'date-fns';
-const API = "http://localhost:10000/api";
+const API = window.location.hostname === "localhost" 
+  ? "http://localhost:10000/api" 
+  : "http://vishalantigravity01.somee.com/api";
 export default function App() {
   const [resetting, setResetting] = useState(false);
   const [showAiOptions, setShowAiOptions] = useState(false);
