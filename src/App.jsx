@@ -4,7 +4,7 @@ import { calculateMonthlyTarget, formatTime } from './utils/dateHelpers';
 import { format, addMonths, subMonths, isSameMonth } from 'date-fns';
 const API = window.location.hostname === "localhost" 
   ? "http://localhost:10000/api" 
-  : "https://vishalantigravity01.somee.com/api";
+  : "/api";
 export default function App() {
   const [resetting, setResetting] = useState(false);
   const [showAiOptions, setShowAiOptions] = useState(false);
