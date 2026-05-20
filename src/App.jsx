@@ -2,9 +2,25 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Clock, Calendar, CheckCircle2, Timer, Trash2, Plus, ChevronLeft, ChevronRight, Settings, Wallet, X, Coffee, Check, Pencil, Filter } from 'lucide-react';
 import { calculateMonthlyTarget, formatTime } from './utils/dateHelpers';
 import { format, addMonths, subMonths, isSameMonth } from 'date-fns';
-const API = window.location.hostname === "localhost" 
-  ? "http://localhost:10000/api" 
-  : "/api";
+const API = window.location.hostname === "localhost"
+  ? "http://localhost:10000/api"
+  : "https://vishalantigravity01.somee.com/api";
+
+const apiFetch = async (endpoint, options = {}) => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const headers = { ...options.headers };
+  if (user.token) { headers["Authorization"] = `Bearer ${user.token}`; }
+  
+  const response = await fetch(`${API}${endpoint}`, { ...options, headers });
+  
+  if (response.status === 401) {
+    localStorage.clear();
+    window.location.reload();
+  }
+  
+  return response;
+};
+
 export default function App() {
   const [resetting, setResetting] = useState(false);
   const [showAiOptions, setShowAiOptions] = useState(false);
@@ -105,7 +121,7 @@ Based on this data, help me analyze my work performance.
   useEffect(() => {
     if (!user) return;
 
-    fetch(`${API}/attendance/${user.id}`)
+    apiFetch(`/attendance/${user.id}`)
       .then(res => {
         if (!res.ok) throw new Error("Fetch failed");
         return res.json();
@@ -265,7 +281,7 @@ Based on this data, help me analyze my work performance.
         [key]: Math.max(0, prev[key] - hours)
       }));
 
-      await fetch(`${API}/attendance/apply-leave`, {
+      await apiFetch(`/attendance/apply-leave`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -277,7 +293,7 @@ Based on this data, help me analyze my work performance.
         })
       });
 
-      const res = await fetch(`${API}/attendance/${user.id}`);
+      const res = await apiFetch(`/attendance/${user.id}`);
       const updated = await res.json();
       setLogs(updated);
 
@@ -301,11 +317,11 @@ Based on this data, help me analyze my work performance.
         const logToDelete = logs.find(l => l.id === id);
         if (logToDelete) restoreLeave(logToDelete);
 
-        await fetch(`${API}/attendance/${id}`, {
+        await apiFetch(`/attendance/${id}`, {
           method: "DELETE"
         });
 
-        const res = await fetch(`${API}/attendance/${user.id}`);
+        const res = await apiFetch(`/attendance/${user.id}`);
         const updated = await res.json();
         setLogs(updated);
 
@@ -373,7 +389,7 @@ Based on this data, help me analyze my work performance.
       }
 
       if (editingId) {
-        await fetch(`${API}/attendance/${editingId}`, {
+        await apiFetch(`/attendance/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -384,7 +400,7 @@ Based on this data, help me analyze my work performance.
           })
         });
       } else {
-        await fetch(`${API}/attendance`, {
+        await apiFetch(`/attendance`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -397,7 +413,7 @@ Based on this data, help me analyze my work performance.
         });
       }
 
-      const res = await fetch(`${API}/attendance/${user.id}`);
+      const res = await apiFetch(`/attendance/${user.id}`);
       const updated = await res.json();
       setLogs(updated);
 
@@ -559,7 +575,7 @@ Based on this data, help me analyze my work performance.
                 setConfigSaving(true);
 
                 try {
-                  const res = await fetch(`${API}/user/${user.id}`, {
+                  const res = await apiFetch(`/user/${user.id}`, {
                     method: "PUT",
                     headers: {
                       "Content-Type": "application/json"
@@ -929,7 +945,7 @@ function SetupScreen({ onComplete, handleTimeInput }) {
         return;
       }
 
-      const res = await fetch(`${API}/auth/login`, {
+      const res = await apiFetch(`/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -942,7 +958,7 @@ function SetupScreen({ onComplete, handleTimeInput }) {
 
       if (res.status === 401) {
 
-        const registerRes = await fetch(`${API}/auth/register`, {
+        const registerRes = await apiFetch(`/auth/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -967,7 +983,7 @@ function SetupScreen({ onComplete, handleTimeInput }) {
 
         const newUser = await registerRes.json();
 
-        const fullUserRes = await fetch(`${API}/user/${newUser.id}`);
+        const fullUserRes = await apiFetch(`/user/${newUser.id}`);
         const fullUser = await fullUserRes.json();
 
         onComplete(fullUser);
@@ -985,7 +1001,7 @@ function SetupScreen({ onComplete, handleTimeInput }) {
           return;
         }
 
-        const fullUserRes = await fetch(`${API}/user/${userObj.id}`);
+        const fullUserRes = await apiFetch(`/user/${userObj.id}`);
         const fullUser = await fullUserRes.json();
 
         onComplete(fullUser);
