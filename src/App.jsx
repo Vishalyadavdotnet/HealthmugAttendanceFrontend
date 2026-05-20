@@ -656,8 +656,8 @@ Based on this data, help me analyze my work performance.
           </div>
         </div>
       )}
-      <main className="max-w-7xl mx-auto px-6 py-10 animate-in slide-in-from-bottom-4 duration-700">
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-10">
+      <main className="max-w-6xl mx-auto px-4 py-6 animate-in slide-in-from-bottom-4 duration-700">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
           <StatCard title="Required Hours" value={formatTime(targetMins)} icon={Calendar} color="text-slate-600" bg="bg-slate-100" />
           <StatCard title="Logged Hours" value={formatTime(doneMins)} icon={CheckCircle2} color="text-emerald-600" bg="bg-emerald-50" />
           <StatCard title="Remaining Hours" value={formatTime(remainingMins)} icon={Timer} color={remainingMins > 0 ? "text-cyan-700" : "text-emerald-700"} bg={remainingMins > 0 ? "bg-cyan-50" : "bg-emerald-50"} />
@@ -726,23 +726,23 @@ Based on this data, help me analyze my work performance.
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-4">
-            <div className={`bg-white p-8 rounded-[2.5rem] border-2 shadow-xl sticky top-28 transition-all duration-500 ${editingId ? 'border-orange-400 ring-8 ring-orange-400/5' : 'border-slate-200 hover:border-indigo-200'}`}>
-              <h2 className="text-lg font-black mb-8 flex items-center gap-2 text-slate-800 tracking-tight">
+            <div className={`bg-white p-6 rounded-3xl border-2 shadow-xl sticky top-20 transition-all duration-500 ${editingId ? 'border-orange-400 ring-4 ring-orange-400/5' : 'border-slate-200 hover:border-indigo-200'}`}>
+              <h2 className="text-lg font-black mb-4 flex items-center gap-2 text-slate-800 tracking-tight">
                 <div className="transition-transform duration-500 rotate-0 hover:rotate-180">
                   {editingId ? <Pencil className="bg-orange-500 text-white p-1.5 rounded-lg shadow-lg shadow-orange-200" size={24} /> : <Plus className="bg-indigo-600 text-white p-1 rounded-lg shadow-lg shadow-indigo-200" size={24} />}
                 </div>
                 {editingId ? 'Edit Entry' : 'Daily Logs'}
               </h2>
-              <form onSubmit={handleSave} className="space-y-6">
+              <form onSubmit={handleSave} className="space-y-4">
                 <Input label="Date" type="date" value={formData.date} onChange={v => setFormData({ ...formData, date: v })} />
-                <button type="button" onClick={() => setFormData({ ...formData, isCL: !formData.isCL })} className={`w-full py-4 rounded-2xl border-2 flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] cursor-pointer hover:shadow-md ${formData.isCL ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-slate-300'}`}>
+                <button type="button" onClick={() => setFormData({ ...formData, isCL: !formData.isCL })} className={`w-full py-3 rounded-2xl border-2 flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] cursor-pointer hover:shadow-md ${formData.isCL ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-slate-300'}`}>
                   <Coffee size={18} className={formData.isCL ? "animate-bounce" : ""} />
                   <span className="text-[11px] font-black uppercase tracking-widest">{formData.isCL ? 'Leave Selected' : 'Mark as Leave (Manual)'}</span>
                 </button>
                 {!formData.isCL && (
-                  <div className="space-y-5 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="flex items-end gap-2">
                       <div className="flex-1"><Input label="In Time" placeholder="09:00" maxLength={5} value={formData.inTime} onChange={v => handleTimeInput(v, 'inTime', (val, f) => setFormData(p => ({ ...p, [f]: val })))} /></div>
                       <PeriodToggle value={formData.inPeriod} onChange={v => setFormData({ ...formData, inPeriod: v })} />
@@ -754,11 +754,11 @@ Based on this data, help me analyze my work performance.
                   </div>
                 )}
                 <div className="flex gap-3">
-                  {editingId && <button type="button" onClick={() => { setEditingId(null); setFormData({ date: format(new Date(), 'yyyy-MM-dd'), inTime: '', outTime: '', isCL: false, inPeriod: 'AM', outPeriod: 'PM' }); }} className="flex-1 bg-slate-100 text-slate-500 font-black py-5 rounded-2xl hover:bg-slate-200 transition-all cursor-pointer uppercase text-[11px] tracking-widest">Cancel</button>}
+                  {editingId && <button type="button" onClick={() => { setEditingId(null); setFormData({ date: format(new Date(), 'yyyy-MM-dd'), inTime: '', outTime: '', isCL: false, inPeriod: 'AM', outPeriod: 'PM' }); }} className="flex-1 bg-slate-100 text-slate-500 font-black py-3 rounded-2xl hover:bg-slate-200 transition-all cursor-pointer uppercase text-[11px] tracking-widest">Cancel</button>}
                   <button
                     type="submit"
                     disabled={saving}
-                    className={`flex-[2] text-white font-black py-5 rounded-2xl shadow-xl transition-all active:scale-[0.98] uppercase text-[11px] tracking-widest cursor-pointer
+                    className={`flex-[2] text-white font-black py-3 rounded-2xl shadow-xl transition-all active:scale-[0.98] uppercase text-[11px] tracking-widest cursor-pointer
   ${saving
                         ? "bg-gray-400 cursor-not-allowed"
                         : editingId
@@ -1090,7 +1090,7 @@ text-center border border-emerald-100 animate-setupEntry">
 const PeriodToggle = ({ value, onChange }) => (
   <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 mb-0.5 shadow-inner">
     {['AM', 'PM'].map(p => (
-      <button key={p} type="button" onClick={() => onChange(p)} className={`px-3 py-3 rounded-xl text-[10px] font-black transition-all duration-300 cursor-pointer active:scale-90 ${value === p
+      <button key={p} type="button" onClick={() => onChange(p)} className={`px-3 py-2 rounded-xl text-[10px] font-black transition-all duration-300 cursor-pointer active:scale-90 ${value === p
         ? 'bg-white text-indigo-600 shadow-sm'
         : 'text-slate-400 hover:text-slate-600 hover:bg-white'
         }`}>{p}</button>
@@ -1100,20 +1100,20 @@ const PeriodToggle = ({ value, onChange }) => (
 
 const Input = ({ label, value, onChange, type = "text", placeholder, maxLength }) => (
   <div className="w-full group">
-    <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-2 ml-1 transition-colors group-focus-within:text-indigo-600">{label}</label>
-    <input type={type} value={value} placeholder={placeholder} maxLength={maxLength} onChange={e => onChange(e.target.value)} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all font-bold text-slate-700" />
+    <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-1 ml-1 transition-colors group-focus-within:text-indigo-600">{label}</label>
+    <input type={type} value={value} placeholder={placeholder} maxLength={maxLength} onChange={e => onChange(e.target.value)} className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all font-bold text-slate-700" />
   </div>
 );
 
 const StatCard = ({ title, value, icon: Icon, color, bg, borderColor, entryBasedDiffMins,
   perDayAdjustment }) => (
-  <div className={`bg-white px-5 py-6 rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-col items-start gap-2 group transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${borderColor || 'hover:border-indigo-200'}`}>   <div className={`p-4 rounded-2xl mb-2 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-sm ${bg} ${color}`}><Icon size={22} /></div>
+  <div className={`bg-white px-5 py-5 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col items-start gap-1 group transition-all duration-500 hover:shadow-xl hover:-translate-y-1 ${borderColor || 'hover:border-indigo-200'}`}>   <div className={`p-3 rounded-2xl mb-1 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-sm ${bg} ${color}`}><Icon size={20} /></div>
     <div>
       <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest -ml-1">
         {title}
       </p>
 
-      <p className={`text-3xl font-black tracking-tighter w-full text-left -ml-1 ${color}`}>
+      <p className={`text-2xl font-black tracking-tighter w-full text-left -ml-1 ${color}`}>
         {value}
       </p>
 
