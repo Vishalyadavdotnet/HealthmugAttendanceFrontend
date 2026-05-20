@@ -4,7 +4,7 @@ import { calculateMonthlyTarget, formatTime } from './utils/dateHelpers';
 import { format, addMonths, subMonths, isSameMonth } from 'date-fns';
 const API = window.location.hostname === "localhost"
   ? "http://localhost:10000/api"
-  : "https://vishalantigravity01.somee.com/api";
+  : "/api";
 
 const apiFetch = async (endpoint, options = {}) => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
