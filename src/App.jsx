@@ -983,11 +983,8 @@ function SetupScreen({ onComplete, handleTimeInput }) {
 
         const newUser = await registerRes.json();
 
-        const fullUserRes = await apiFetch(`/user/${newUser.id}`);
-        const fullUser = await fullUserRes.json();
-
-        onComplete(fullUser);
-        localStorage.setItem("user", JSON.stringify(fullUser));
+        onComplete(newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
       }
 
       else if (res.ok) {
@@ -1001,11 +998,8 @@ function SetupScreen({ onComplete, handleTimeInput }) {
           return;
         }
 
-        const fullUserRes = await apiFetch(`/user/${userObj.id}`);
-        const fullUser = await fullUserRes.json();
-
-        onComplete(fullUser);
-        localStorage.setItem("user", JSON.stringify(fullUser));
+        onComplete(userObj);
+        localStorage.setItem("user", JSON.stringify(userObj));
       }
 
     } catch (err) {
