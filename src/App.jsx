@@ -468,7 +468,7 @@ Based on this data, help me analyze my work performance.
         </div>
       )}
       {/* ✅ TOAST END */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-sm">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="bg-indigo-600 p-2 rounded-xl text-white shadow-lg shadow-indigo-200 animate-pulse-slow"><Clock size={20} /></div>
           <div className="flex flex-col leading-tight">
@@ -1113,7 +1113,7 @@ const StatCard = ({ title, value, icon: Icon, color, bg, borderColor, entryBased
         {title}
       </p>
 
-      <p className={`text-2xl font-black tracking-tighter w-full text-left -ml-1 ${color}`}>
+      <p className={`text-xl sm:text-2xl lg:text-3xl font-black tracking-tighter w-full text-left -ml-1 whitespace-nowrap overflow-hidden text-ellipsis ${color}`}>
         {value}
       </p>
 
